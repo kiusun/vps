@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="container text-center">
+    <nav class="navbar  navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Link Cloaking System</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div>
+        <form action="/dashboard" method="POST">
+
+            <input type="hidden" id="linkId" name="linkId" size="75" value="" readonly="readonly">
+            <br>
+            Title:<br>
+            <input type="text" id="title" name="title" size="75" value="">
+            <br>
+            Link Fake:<br>
+            <input type="text" id="linkFake" name="linkFake" size="75" value="">
+            <br>
+            Link Ảnh:<br>
+            <input type="text" id="imgUrl" name="imgUrl" size="75" value="">
+            <br>
+            Domain:<br>
+            <input type="text" id="domain" name="domain" size="75" value="">
+            <br><br>
+            <input type="submit" class="btn btn-success" value="Save Link"> | <input type="button" onclick="restform()" class="btn btn-danger" value="Reset Form">
+        </form>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Link</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/dashboard" method="POST">
+
+                        <input type="hidden" id="linkIdEdit" name="linkId" size="75" value="" readonly="readonly">
+                        <br>
+                        Title:<br>
+                        <input type="text" id="titleEdit" name="title" size="75" value="">
+                        <br>
+                        Link Fake:<br>
+                        <input type="text" id="linkFakeEdit" name="linkFake" size="75" value="">
+                        <br>
+                        Link Ảnh:<br>
+                        <input type="text" id="imgUrlEdit" name="imgUrl" size="75" value="">
+                        <br>
+                        Domain:<br>
+                        <input type="text" id="domainEdit" name="domain" size="75" value="">
+                        <br><br>
+                        <input type="submit" class="btn btn-success" value="Save Link">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <td nowrap="nowrap">
+        <center>
+            <h3>Link info - Server IP <%= ip %></h3>
+        </center>
+    </td>
+    <% for(i=0 ; i < link.length ; i++) { %>
+    <tr role="row">
+        <td>
+            <div class="pull-right hidden-xs hidden-sm">
+                <form action="/deletelink" method="POST">
+                    <button id="refresh-btn" onclick="change(value)" type="button" value="<%= link[i].linkId + '|'+ link[i].title + '|'+ link[i].linkFake + '|'+ link[i].imgUrl + '|'+ link[i].domain %>" class="btn btn-xs btn-success" style="font-size: 10px;font-weight: bold;" data-toggle="modal" data-target="#myModal">Edit link</button>
+                    <button name="delete" type="submit" value="<%= link[i].linkId %>" class="btn btn-xs btn-danger" style="font-size: 10px;font-weight: bold;">Delete</button>
+                </form>
+            </div>
+            <br>
+            <h4 align="left">
+                <%= link[i].title %>
+            </h4>
+            <input class="form-control" onclick="rCopy(this)" readonly="1" style="color: #3c8dbc;width:100%; background-color:white; font-weight: bold;" type="text" value="http://<%= link[i].domain +'/'+ params1[i] +'.html&id='+ link[i].linkId %>">
+            <input class="form-control hidden-xs hidden-sm" onclick="rCopy(this)" readonly="1" style="color: #3c8dbc;width:100%; background-color:white; font-weight: bold;" type="text" value="http://<%= subdomain[i]+'.'+link[i].domain +'/'+ params1[i] +'.html&id='+ link[i].linkId %>">
+            <input class="form-control hidden-xs hidden-sm" onclick="rCopy(this)" readonly="1" style="color: #3c8dbc;width:100%; background-color:white; font-weight: bold;" type="text" value="<%= link[i].imgUrl %>">
+            <input class="form-control" style="color: black; background-color:white; font-weight: bold; width:100%;" value="<%= link[i].linkFake %>" readonly="1">
+        </td>
+    </tr>
+    <br>
+
+    <% } %>
+
+</div>
+<script>
+    function change(value) {
+        var values = value.split("|");
+        $("#linkIdEdit").val(values[0]);
+        $("#titleEdit").val(values[1]);
+        $("#linkFakeEdit").val(values[2]);
+        $("#imgUrlEdit").val(values[3]);
+        $("#domainEdit").val(values[4]);
+    };
+</script>
+<script>
+    function restform() {
+        $("#linkId").val("");
+        $("#title").val("");
+        $("#linkFake").val("");
+        $("#imgUrl").val("");
+        $("#domain").val("");
+    };
+</script>

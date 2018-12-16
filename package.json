@@ -9,6 +9,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "@maxmind/geoip2-node": "^0.1.1",
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "connect-mongo": "^2.0.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "ip-range-check": "0.0.2",
+    "ipfilter": "0.0.4",
+    "ipware": "^1.0.0",
+    "isbot": "^2.2.0",
+    "mongoose": "^5.3.12",
+    "node-isbot": "0.0.8"
   }
 }
